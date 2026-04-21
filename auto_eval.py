@@ -58,7 +58,7 @@ RATING_OPTIONS = {
 }
 
 QUESTION_IDS = [56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
-DELAY        = 0.4   # seconds between submissions
+DELAY        = 20   # seconds between submissions
 
 
 # ── Config Prompts ────────────────────────────────────────────────────────────
