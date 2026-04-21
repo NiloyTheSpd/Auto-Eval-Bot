@@ -80,6 +80,24 @@ Chrome opens, logs in, and closes. Submissions run automatically.
 
 ## ⚠️ Ethical Use & Warnings
 
+### Anonymity — what's actually true
+ 
+The portal markets evaluations as "anonymous." That is **partially true at best.**
+ 
+Here's what the submission payload actually contains:
+ 
+```
+Authorization: Bearer <your JWT>   ← your studentId and username are encoded inside
+studentFacultyEvaId: <entry ID>    ← a record tied specifically to you and that faculty
+```
+ 
+**What faculty CAN'T see:** Individual student names on their own evaluation dashboard. In that narrow sense, it is anonymous to the faculty member.
+ 
+**What admins CAN see:** Everything. The server has the full record — who submitted, who they rated, what score, what timestamp. It is completely traceable at the system/admin level.
+ 
+**Practical implication:** Submitting all-Excellent ratings via a bot is theoretically detectable — an admin query like *"show me every student who gave all 10s with comment='Good' in under 5 seconds"* would surface bot runs trivially. Rate accordingly.
+ 
+
 **Read this before you run the script.**
 
 ### Be honest
