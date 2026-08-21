@@ -19,6 +19,14 @@ import getpass
 import warnings
 import requests
 import urllib3
+
+# Force UTF-8 output so box-drawing chars never crash on legacy codepages.
+for _stream in (sys.stdout, sys.stderr):
+    if _stream is not None and hasattr(_stream, "reconfigure"):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
 from selenium import webdriver
 
 # MIST's API cert chain isn't trusted by Python's default CA bundle.
@@ -134,8 +142,11 @@ def build_driver(headless: bool = False) -> webdriver.Chrome:
     opts.add_argument("--window-size=1100,750")
 
     if USE_WDM:
-        service = Service(ChromeDriverManager().install())
-        return webdriver.Chrome(service=service, options=opts)
+        try:
+            service = Service(ChromeDriverManager().install())
+            return webdriver.Chrome(service=service, options=opts)
+        except Exception:
+            pass  # fall back to Selenium's built-in manager
     return webdriver.Chrome(options=opts)
 
 
