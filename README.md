@@ -19,7 +19,26 @@ It's a **Selenium + requests hybrid** — browser only for auth, lightweight API
 
 ---
 
-## Requirements
+## Quick Start — Standalone EXE (No Installation)
+
+Don't want to install Python? Download **`AutoEvalBot.exe`** from the [Releases](https://github.com/NiloyTheSpd/Auto-Eval-Bot/releases) page and double-click it. That's it.
+
+- Everything (Python + all libraries) is bundled inside the single file
+- Only requirement: **Google Chrome** installed on your machine
+
+> **Windows SmartScreen warning?** The exe is unsigned, so Windows may show *"Windows protected your PC"* on first run. Click **More info → Run anyway**. (Or build it yourself — see below.)
+
+To build the exe yourself instead of downloading it:
+
+```bash
+build_exe.bat
+```
+
+The finished file appears in `dist\AutoEvalBot.exe`.
+
+---
+
+## Requirements (Running from Source)
 
 - Python 3.10+
 - Google Chrome (any recent version)
@@ -34,6 +53,8 @@ pip install requests selenium webdriver-manager
 ---
 
 ## Usage
+
+Run the exe (`AutoEvalBot.exe`) or, from source:
 
 ```bash
 python auto_eval.py
@@ -128,14 +149,17 @@ Only `answerId=30` (Excellent) has been confirmed through network inspection. ID
 | Login redirect times out | Check your credentials; CAPTCHA may have triggered — try logging in manually first |
 | Token extraction fails | Wait for the dashboard to fully load, press Enter when prompted for retry |
 | All submissions fail | Token may have expired mid-run; just re-run the script |
-| `ModuleNotFoundError` | Run `pip install requests selenium webdriver-manager` |
+| `ModuleNotFoundError` | Run `pip install requests selenium webdriver-manager` (source only — never happens with the exe) |
+| SmartScreen blocks the exe | Click **More info → Run anyway**; the exe is unsigned |
+| Antivirus flags the exe | False positive common with PyInstaller builds — build it yourself with `build_exe.bat` |
 
 ---
 
 ## Project Structure
 
 ```
-auto_eval.py   # Main script (everything in one file)
+auto_eval.py     # Main script (everything in one file)
+build_exe.bat    # One-command build of the standalone exe
 README.md
 LICENSE
 ```
