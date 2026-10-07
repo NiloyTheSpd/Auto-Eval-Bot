@@ -11,10 +11,10 @@ if not exist .build-venv (
 )
 
 echo Installing dependencies...
-.\.build-venv\Scripts\python.exe -m pip install --quiet requests selenium webdriver-manager pyinstaller
+.\.build-venv\Scripts\python.exe -m pip install --quiet -r requirements.txt pyinstaller
 
 echo Building exe...
-.\.build-venv\Scripts\pyinstaller.exe --onefile --console --clean --name AutoEvalBot ^
+.\.build-venv\Scripts\pyinstaller.exe --onefile --console --clean --noconfirm --name AutoEvalBot ^
     --collect-all selenium --collect-submodules webdriver_manager auto_eval.py
 
 if exist dist\AutoEvalBot.exe (

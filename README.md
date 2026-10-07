@@ -19,22 +19,27 @@ It's a **Selenium + requests hybrid** — browser only for auth, lightweight API
 
 ---
 
-## Quick Start — Standalone EXE (No Installation)
+## Quick Start — Standalone Builds (No Installation)
 
-Don't want to install Python? Download **`AutoEvalBot.exe`** from the [Releases](https://github.com/NiloyTheSpd/Auto-Eval-Bot/releases) page and double-click it. That's it.
+Don't want to install Python? Download the build for your OS from the [Releases](https://github.com/NiloyTheSpd/Auto-Eval-Bot/releases) page. No Python or pip needed — everything is bundled. Only requirement on every OS: **Google Chrome** installed.
 
-- Everything (Python + all libraries) is bundled inside the single file
-- Only requirement: **Google Chrome** installed on your machine
+| OS | File | How to run |
+|---|---|---|
+| Windows 10/11 (64-bit) | `AutoEvalBot-Windows-x64.exe` | Download and double-click. |
+| Linux (64-bit) | `AutoEvalBot-Linux-x64.tar.gz` | `tar -xzf AutoEvalBot-Linux-x64.tar.gz && chmod +x AutoEvalBot && ./AutoEvalBot` |
+| macOS Apple Silicon | `AutoEvalBot-macOS-arm64.tar.gz` | `tar -xzf AutoEvalBot-macOS-arm64.tar.gz && chmod +x AutoEvalBot && ./AutoEvalBot` |
+| macOS Intel | `AutoEvalBot-macOS-x64.tar.gz` | Same as above on Intel Macs. |
 
 > **Windows SmartScreen warning?** The exe is unsigned, so Windows may show *"Windows protected your PC"* on first run. Click **More info → Run anyway**. (Or build it yourself — see below.)
+>
+> **macOS Gatekeeper warning?** The binary is unsigned, so macOS may block it on first run. Right-click the file → **Open** → **Open** to allow it once. (Or build it yourself — see below.)
 
-To build the exe yourself instead of downloading it:
+To build it yourself instead of downloading it:
 
-```bash
-build_exe.bat
-```
+- Windows: `build_exe.bat` → finished file appears in `dist\AutoEvalBot.exe`
+- Linux / macOS: `./build.sh` → finished file appears in `dist/AutoEvalBot`
 
-The finished file appears in `dist\AutoEvalBot.exe`.
+Releases are built automatically by GitHub Actions (`.github/workflows/release.yml`): pushing a tag like `v1.0.0` builds all four binaries and attaches them to the Release.
 
 ---
 
@@ -45,7 +50,7 @@ The finished file appears in `dist\AutoEvalBot.exe`.
 - The following Python packages:
 
 ```bash
-pip install requests selenium webdriver-manager
+pip install -r requirements.txt
 ```
 
 `webdriver-manager` handles ChromeDriver automatically — no manual driver download needed.
@@ -149,7 +154,7 @@ Only `answerId=30` (Excellent) has been confirmed through network inspection. ID
 | Login redirect times out | Check your credentials; CAPTCHA may have triggered — try logging in manually first |
 | Token extraction fails | Wait for the dashboard to fully load, press Enter when prompted for retry |
 | All submissions fail | Token may have expired mid-run; just re-run the script |
-| `ModuleNotFoundError` | Run `pip install requests selenium webdriver-manager` (source only — never happens with the exe) |
+| `ModuleNotFoundError` | Run `pip install -r requirements.txt` (source only — never happens with the standalone builds) |
 | SmartScreen blocks the exe | Click **More info → Run anyway**; the exe is unsigned |
 | Antivirus flags the exe | False positive common with PyInstaller builds — build it yourself with `build_exe.bat` |
 
@@ -158,8 +163,11 @@ Only `answerId=30` (Excellent) has been confirmed through network inspection. ID
 ## Project Structure
 
 ```
-auto_eval.py     # Main script (everything in one file)
-build_exe.bat    # One-command build of the standalone exe
+auto_eval.py                 # Main script (everything in one file)
+requirements.txt             # Runtime dependencies
+build_exe.bat                # One-command local build on Windows -> dist\AutoEvalBot.exe
+build.sh                     # One-command local build on Linux/macOS -> dist/AutoEvalBot
+.github/workflows/release.yml  # CI: builds all 4 OS binaries + publishes GitHub Release on tag v*
 README.md
 LICENSE
 ```
