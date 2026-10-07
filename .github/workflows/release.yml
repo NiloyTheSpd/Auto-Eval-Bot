@@ -65,10 +65,8 @@ jobs:
             ls -lh dist/
           else
             chmod +x "dist/${{ matrix.dist_file }}"
-            INNER="AutoEvalBot"
-            mv "dist/${{ matrix.dist_file }}" "dist/${INNER}"
-            tar -czf "dist/${{ matrix.asset_file }}" -C dist "${INNER}"
-            rm "dist/${INNER}"
+            tar -czf "dist/${{ matrix.asset_file }}" -C dist "${{ matrix.dist_file }}"
+            rm "dist/${{ matrix.dist_file }}"
             ls -lh dist/
             tar -tzf "dist/${{ matrix.asset_file }}"
           fi
